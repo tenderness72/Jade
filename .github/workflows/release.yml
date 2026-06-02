@@ -6,6 +6,9 @@ on:
       - "v*"          # v0.1.0 などタグをプッシュするとリリースビルド開始
   workflow_dispatch:  # 手動実行も可能
 
+permissions:
+  contents: write   # リリース作成に必要
+
 jobs:
   build:
     strategy:
