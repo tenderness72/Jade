@@ -1,0 +1,249 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   Atom Dark 256 カラーパレット
+   Base16 / Tomorrow Night Atom Dark 系統
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* 背景 */
+  --bg-base:     #1d1f21;   /* エディタ背景                    */
+  --bg-mantle:   #282a2e;   /* サイドバー・パネル背景          */
+  --bg-crust:    #15171a;   /* タイトルバー・ステータスバー    */
+  --bg-surface0: #373b41;   /* ホバー・アクティブ行・選択      */
+  --bg-surface1: #41454d;   /* サブtle背景                     */
+  --bg-surface2: #4b5057;   /* 無効化要素                      */
+
+  /* テキスト */
+  --text:        #c5c8c6;   /* メインテキスト                  */
+  --subtext1:    #b4b7b4;
+  --subtext0:    #969896;
+  --overlay1:    #707880;   /* コメント・プレースホルダー      */
+
+  /* アクセントカラー */
+  --accent:      #81a2be;   /* リンク・アクティブタブ・カーソル（青） */
+  --green:       #b5bd68;   /* タグ・文字列                    */
+  --yellow:      #f0c674;   /* 型名・警告                      */
+  --red:         #cc6666;   /* エラー・見出しH1                */
+  --peach:       #de935f;   /* 数値・見出しH2                  */
+  --purple:      #b294bb;   /* キーワード                      */
+  --cyan:        #8abeb7;   /* 特殊・コード                    */
+
+  /* ボーダー・スクロールバー */
+  --border:      #373b41;
+  --scrollbar:   #41454d;
+
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ベースリセット
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-base);
+  color: var(--text);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code',
+               'Noto Sans JP', 'Hiragino Sans', 'Meiryo', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   スクロールバー
+   ═══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-surface2); }
+
+/* ═══════════════════════════════════════════════════════════
+   コンテキストメニュー
+   ═══════════════════════════════════════════════════════════ */
+.context-menu {
+  position: fixed;
+  z-index: 1000;
+  background: var(--bg-surface0);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 0;
+  min-width: 150px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.5);
+}
+.context-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 5px 14px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.context-menu button:hover  { background: var(--bg-surface1); }
+.context-menu button.danger { color: var(--red); }
+.context-menu .separator    { height: 1px; background: var(--border); margin: 3px 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   CodeMirror カスタマイズ
+   ═══════════════════════════════════════════════════════════ */
+.cm-editor {
+  height: 100%;
+  font-size: 13px;
+  line-height: 1.75;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+.cm-editor.cm-focused { outline: none; }
+.cm-scroller { overflow: auto; }
+.cm-content  { padding: 16px 20px; caret-color: var(--accent); }
+.cm-line     { padding: 0 !important; }
+
+/* Wikiリンク */
+.cm-wikilink {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #81a2be66;
+}
+.cm-wikilink:hover {
+  color: var(--cyan);
+  text-decoration-color: var(--cyan);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Markdown プレビュー（分割ペイン）
+   ═══════════════════════════════════════════════════════════ */
+.markdown-preview {
+  padding: 20px 28px;
+  overflow-y: auto;
+  height: 100%;
+  color: var(--text);
+  line-height: 1.85;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', system-ui, sans-serif;
+  font-size: 13.5px;
+  background: var(--bg-base);
+}
+
+.markdown-preview h1 {
+  font-size: 1.7em; font-weight: 700;
+  color: var(--red);
+  margin: 0.3em 0 0.5em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border);
+}
+.markdown-preview h2 {
+  font-size: 1.35em; font-weight: 700;
+  color: var(--peach);
+  margin: 1.2em 0 0.4em;
+}
+.markdown-preview h3 {
+  font-size: 1.1em; font-weight: 600;
+  color: var(--yellow);
+  margin: 1em 0 0.3em;
+}
+.markdown-preview h4, .markdown-preview h5, .markdown-preview h6 {
+  font-size: 1em; font-weight: 600;
+  color: var(--green);
+  margin: 0.8em 0 0.3em;
+}
+.markdown-preview p      { margin: 0.55em 0; }
+.markdown-preview ul,
+.markdown-preview ol     { padding-left: 1.6em; margin: 0.4em 0; }
+.markdown-preview li     { margin: 0.25em 0; }
+.markdown-preview li > p { margin: 0.15em 0; }
+
+.markdown-preview code {
+  background: #282a2e;
+  color: var(--cyan);
+  padding: 0.1em 0.45em;
+  border-radius: 3px;
+  font-size: 0.87em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  border: 1px solid var(--border);
+}
+.markdown-preview pre {
+  background: #15171a;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 14px 18px;
+  overflow-x: auto;
+  margin: 0.8em 0;
+}
+.markdown-preview pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text);
+  font-size: 0.9em;
+}
+.markdown-preview blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1em;
+  color: var(--subtext0);
+  margin: 0.6em 0;
+  font-style: italic;
+}
+.markdown-preview a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #81a2be55;
+}
+.markdown-preview a:hover { color: var(--cyan); }
+.markdown-preview hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.4em 0;
+}
+.markdown-preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+  font-size: 0.92em;
+}
+.markdown-preview th,
+.markdown-preview td    { border: 1px solid var(--border); padding: 6px 12px; }
+.markdown-preview th    { background: var(--bg-mantle); color: var(--yellow); font-weight: 600; }
+.markdown-preview tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.markdown-preview strong { color: var(--text); font-weight: 700; }
+.markdown-preview em     { color: var(--subtext1); font-style: italic; }
+.markdown-preview del    { color: var(--overlay1); text-decoration: line-through; }
+
+/* Wikiリンク（プレビュー内） */
+.markdown-preview .wikilink {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #81a2be55;
+}
+.markdown-preview .wikilink:hover { color: var(--cyan); }
+
+/* タグ（プレビュー内） */
+.markdown-preview .tag {
+  display: inline-block;
+  background: rgba(181,189,104,.12);
+  color: var(--green);
+  font-size: 0.8em;
+  padding: 1px 8px;
+  border-radius: 10px;
+  margin: 0 2px;
+  cursor: pointer;
+  border: 1px solid rgba(181,189,104,.25);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   アニメーション
+   ═══════════════════════════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.12s ease; }
